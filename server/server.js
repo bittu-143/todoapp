@@ -119,4 +119,4 @@ app.post('/login',async (req,res)=>{
     }
 })
 
-app.listen(port,()=>console.log(`running server on port ${port}`));
+app.listen(process.env.PORT,()=>console.log(`running server on port ${port}`));
