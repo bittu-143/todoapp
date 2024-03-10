@@ -8,23 +8,23 @@ import bcrypt from "bcrypt"; //used to hash password
 import jwt from "jsonwebtoken";
 import pg from "pg";
 
-const db = new pg.Pool({
-  connectionString: "postgres://default:o93yvFXIGxzg@ep-orange-math-a43s5dhd-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
-});
-db.connect((e)=>{if(e) throw e; console.log("connected to db")});
+// const db = new pg.Pool({
+//   connectionString: "postgres://default:o93yvFXIGxzg@ep-orange-math-a43s5dhd-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require",
+// });
+// db.connect((e)=>{if(e) throw e; console.log("connected to db")});
 
 const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-// const db = new pg.Client({
-//     user: process.env.user,
-//     host: process.env.host,
-//     database: process.env.database,
-//     password: process.env.password,
-//     port: process.env.dbport
-// });
-// db.connect();
+const db = new pg.Client({
+    user: process.env.user,
+    host: process.env.host,
+    database: process.env.database,
+    password: process.env.password,
+    port: process.env.dbport
+});
+db.connect();
 
 //getting todos
 app.get('/todos/:userEmail',async (req,res)=>{
@@ -119,4 +119,4 @@ app.post('/login',async (req,res)=>{
     }
 })
 
-app.listen(process.env.PORT,()=>console.log(`running server on port ${port}`));
+app.listen(port,()=>console.log(`running server on port ${port}`));
